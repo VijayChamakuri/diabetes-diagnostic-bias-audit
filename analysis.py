@@ -28,7 +28,10 @@ from sklearn.preprocessing import StandardScaler
 warnings.filterwarnings("ignore")
 np.random.seed(42)
 
-NHANES_DIR   = os.path.dirname(os.path.abspath(__file__))  # XPT files in same directory as script
+_BASE        = os.path.dirname(os.path.abspath(__file__))
+NHANES_DIR   = os.path.join(_BASE, "data")     # XPT files live in data/
+OUTPUTS_DIR  = os.path.join(_BASE, "outputs")  # charts and CSVs go here
+os.makedirs(OUTPUTS_DIR, exist_ok=True)
 HBA1C_THRESH = 6.5
 N_BOOTSTRAP  = 500
 
