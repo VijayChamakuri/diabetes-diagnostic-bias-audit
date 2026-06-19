@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/Python-3.9+-blue)
+![NHANES](https://img.shields.io/badge/Data-NHANES%202017--2018-green)
+![Survey Weighted](https://img.shields.io/badge/Analysis-Survey%20Weighted-orange)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+
 # Diagnostic Label Bias in Diabetes: A Racial Equity Audit Using NHANES 2017–2018
 
 ## What This Project Does
@@ -10,6 +15,14 @@ Two logistic regression models are trained on the same features (age, sex, race/
 - **M2**: Label = whether the respondent meets the ADA criterion for diabetes by HbA1c ≥ 6.5% (`LBXGH ≥ 6.5`)
 
 Both models are evaluated against the HbA1c criterion as ground truth. The gap between M1 and M2 performance, and the unequal distribution of that gap across racial groups, is the measure of label bias.
+
+---
+
+## TL;DR
+
+> Among individuals meeting the HbA1c criterion for diabetes, **Non-Hispanic Black respondents are undiagnosed at 2.5× the rate of Non-Hispanic White respondents** (32.2% vs. 12.8%, p = 0.005, NHANES 2017–2018, n=711 HbA1c-positive respondents, survey-weighted).
+>
+> Switching from a doctor-diagnosed label to the HbA1c criterion as a model training target closes sensitivity gaps for non-White groups — but the resulting false-positive burden falls almost entirely on Non-Hispanic Black and Other Hispanic respondents (+16–17pp vs. +4pp for Non-Hispanic White). The "fairer" label creates a different distributional inequity.
 
 ---
 
@@ -76,6 +89,8 @@ Weights: `WTMEC2YR`. Variance: Taylor linearization with centered lonely-PSU cor
 
 *Language note: "meeting the HbA1c criterion" is used throughout, not "objectively diabetic." The HbA1c criterion is one of three ADA diagnostic criteria; its reliability may vary for individuals with sickle cell trait (see Limitations).*
 
+![Undiagnosis rate by group with 95% CIs](outputs/chart3_undiagnosis_rate.png)
+
 ---
 
 ### Finding 2 — Model Performance: AUC
@@ -115,6 +130,8 @@ Both models evaluated against HbA1c ≥ 6.5% as ground truth. Gap column: positi
 | Other Hispanic | 158 | 100.0% | −11.5pp |
 | Non-Hispanic Asian | 237 | 96.4% | −7.9pp |
 
+![Sensitivity by group, both models side by side](outputs/chart1_sensitivity_by_group.png)
+
 ---
 
 ### Finding 4 — Specificity Cost
@@ -130,6 +147,8 @@ When switching from M1 to M2, specificity drops for all groups. This specificity
 | Non-Hispanic Asian | 55.4% | 50.2% | +5.2pp |
 
 The false-positive burden of adopting the "fairer" label criterion falls almost entirely on Non-Hispanic Black and Other Hispanic respondents (+16–17pp), versus +4–6pp for all other groups.
+
+![Specificity cost by group](outputs/chart2_specificity_cost.png)
 
 ---
 
@@ -196,7 +215,7 @@ Direction is invariant. All three analyses are statistically significant. The ma
 ```bash
 pip install -r requirements.txt
 
-# Place DEMO_J.XPT, DIQ_J.XPT, GHB_J.XPT, GLU_J.XPT in this directory, then:
+# Place DEMO_J.XPT, DIQ_J.XPT, GHB_J.XPT, GLU_J.XPT in the data/ folder, then:
 python analysis.py
 ```
 
